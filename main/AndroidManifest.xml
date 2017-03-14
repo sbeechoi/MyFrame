@@ -11,9 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-
         <activity android:name=".MainActivity"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
