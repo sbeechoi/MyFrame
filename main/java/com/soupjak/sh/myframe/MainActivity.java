@@ -1,18 +1,24 @@
 package com.soupjak.sh.myframe;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterViewFlipper;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     private AdapterViewFlipper aVF;
-    int[] images = {R.drawable.a, R.drawable.b, R.drawable.c};
-    private File files[];
+    private ArrayList<File> files;
+    private static final int iDelay2 = 10000;
+
+    Handler mHandler = new Handler();
+    Random mRandom = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +44,20 @@ public class MainActivity extends AppCompatActivity {
             aVF.setAdapter(cAdapter);
         else
             Log.d("Flipper", "cAdapter is nUll!!");
-        aVF.setFlipInterval(10000);
-        aVF.setAutoStart(true);
-        Log.d("Flipper", "MainFunction");
 
+        mHandler.postDelayed(mFlip, iDelay2);
+        Log.d("Flipper", "MainFunction");
+        //aVF.setAutoStart(true);
     }
+
+    private Runnable mFlip = new Runnable() {
+        @Override
+        public void run() {
+            //Log.d("Flipper", "FileSize = " + files.size());
+            int next = mRandom.nextInt(files.size());
+            aVF.setDisplayedChild(next);
+            mHandler.postDelayed(this, iDelay2);
+        }
+    };
 
 }

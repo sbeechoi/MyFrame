@@ -11,16 +11,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by SH on 2017-03-12.
  */
 
 public class CustomAdapter extends BaseAdapter {
+
     private Context context;
-    private int[] images;
-    private String path;
-    private File[] files;
+    private ArrayList<File> files;
     private int counts;
     private LayoutInflater inflater;
 
@@ -30,17 +30,10 @@ public class CustomAdapter extends BaseAdapter {
         inflater = (LayoutInflater.from(context));
     }
 
-    public CustomAdapter(Context context, int[] images) {
-        this.context = context;
-        this.images = images;
-        this.counts = images.length;
-        inflater = (LayoutInflater.from(context));
-    }
-
-    public CustomAdapter(Context context, File[] files) {
+    public CustomAdapter(Context context, ArrayList<File> files) {
         this.context = context;
         this.files = files;
-        this.counts = files.length;
+        this.counts = files.size();
         inflater = (LayoutInflater.from(context));
     }
 
@@ -51,7 +44,7 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return files[position];
+        return files.get(position);
     }
 
     @Override
@@ -65,13 +58,12 @@ public class CustomAdapter extends BaseAdapter {
         ImageView imageView = (ImageView)convertView.findViewById(R.id.Image);
 
         if(files!=null) {
-            Bitmap myBitmap = BitmapFactory.decodeFile(files[position].getPath());
+            Bitmap myBitmap = BitmapFactory.decodeFile(files.get(position).getPath());
             imageView.setImageBitmap(myBitmap);
         }else {
             Log.d("Flipper", "Files[] is null!");
         }
-
-        Log.d("Flipper", "Next Image");
+        Log.d("Flipper", "Next Image : Index["+position+"]");
         return convertView;
     }
 }
